@@ -9,7 +9,7 @@ export async function PUT(req) {
   const data = await req.json();
   const { _id, name, image, ...otherUserInfo } = data;
   let filter = {};
-  
+
   if (_id) {
     filter = { _id };
     const user = await User.findOne(filter);
@@ -54,7 +54,7 @@ export async function GET(req) {
     const session = await getServerSession(authOption);
     const email = session?.user?.email;
     if (!email) {
-      return res.json({});
+      return Response.json({});
     }
     const user = await User.findOne({ email }).lean();
     const userInfo = await UserInfo.findOne({ email }).lean();

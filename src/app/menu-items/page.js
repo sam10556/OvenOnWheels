@@ -38,11 +38,18 @@ export default function MenuItemsPage() {
           {menuItems?.length > 0 &&
             menuItems.map((item) => (
               <Link
+                key={item._id}
                 href={"/menu-items/edit/" + item._id}
                 className="bg-gray-200 rounded-lg p-4"
               >
                 <div className="relative">
-                  <Image className="rounded-md" src={item.image} alt=" " width={200} height={200} />
+                  <Image
+                    className="rounded-md"
+                    src={item.image}
+                    alt=" "
+                    width={200}
+                    height={200}
+                  />
                 </div>
                 <div className="text-center">{item.name}</div>
               </Link>

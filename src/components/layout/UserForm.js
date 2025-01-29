@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useProfile } from "../UseProfile";
 import UploadImage from "@/components/layout/UploadImage";
 import AddressInputs from "@/components/layout/AddressInputs";
+import Image from "next/image";
 
 export default function UserForm({ user, onSave }) {
   const [userName, setUserName] = useState(user?.name || "");
@@ -12,8 +13,9 @@ export default function UserForm({ user, onSave }) {
   const [postalCode, setPostalCode] = useState(user?.postalCode || "");
   const [city, setCity] = useState(user?.city || "");
   const [country, setCountry] = useState(user?.country || "");
-  const [admin, setAdmin] = useState(user?.admin || "");
+  const [admin, setAdmin] = useState(user?.admin || false );
   const { data: loggedInUserData } = useProfile();
+  const defaultImage = "/google.png";
 
   function handleAddressChange(propName, value) {
     if (propName === "phone") setPhone(value);
@@ -23,10 +25,10 @@ export default function UserForm({ user, onSave }) {
     if (propName === "country") setCountry(value);
   }
   return (
-    <div className="flex gap-4">
+    <div className="md:flex gap-4">
       <div>
         <div className="p-2 rounded-lg relative max-w-[300px]">
-          {image && <img src={image} alt="Uploaded" />}
+          {image && <Image src={image || defaultImage} alt="Upload Image" width={100} height={100}/>}
           <UploadImage onImageUpload={setImage} />
         </div>
       </div>
@@ -73,7 +75,7 @@ export default function UserForm({ user, onSave }) {
                 className=""
                 value={"1"}
                 checked={admin}
-                onClick={(ev) => setAdmin(ev.target.checked)}
+                onChange={(ev) => setAdmin(ev.target.checked)}
               />
               <span>Admin</span>
             </label>

@@ -3,7 +3,6 @@ import { CartContext } from "../AppContext";
 import toast from "react-hot-toast";
 import MenuItemTile from "@/components/menu/MenuItemTile";
 import Image from "next/image";
-import FlyingButton from "react-flying-item";
 
 export default function MenuItem(menuItem) {
   const { image, name, description, basePrice, sizes, extraIngredientsPrices } =
@@ -22,7 +21,7 @@ export default function MenuItem(menuItem) {
     addToCart(menuItem, selectedSize, selectedExtras);
     setTimeout(() => {
       setShowPopUp(false);
-    },1000);
+    }, 1000);
     toast.success("Added To Cart");
   }
   function handleExtraThingClick(ev, extraThing) {
@@ -80,11 +79,14 @@ export default function MenuItem(menuItem) {
                 <div className="py-2">
                   <h3 className="text-center text-gray-600">Pick Your Size</h3>
                   {sizes.map((size) => (
-                    <label className="flex items-center gap-1 p-2 rounded-md mb-1 text-gray-500">
+                    <label
+                      key={size._id}
+                      className="flex items-center gap-1 p-2 rounded-md mb-1 text-gray-500"
+                    >
                       <input
                         type="radio"
                         name="size"
-                        onClick={() => setSelectedSize(size)}
+                        onChange={() => setSelectedSize(size)}
                         checked={selectedSize?.name === size.name}
                       />
                       {size.name} ₹{basePrice + size.price}
@@ -96,25 +98,31 @@ export default function MenuItem(menuItem) {
                 <div className="py-2">
                   <h3 className="text-center text-gray-600">Any Extras?</h3>
                   {extraIngredientsPrices.map((extraThing) => (
-                    <label className="flex items-center gap-1 p-2 rounded-md mb-1 text-gray-500">
+                    <label
+                      key={extraThing._id}
+                      className="flex items-center gap-1 p-2 rounded-md mb-1 text-gray-500"
+                    >
                       <input
                         type="checkbox"
                         name={extraThing.name}
-                        onClick={(ev) => handleExtraThingClick(ev, extraThing)}
+                        onChange={(ev) => handleExtraThingClick(ev, extraThing)}
+                        checked={selectedExtras
+                          .map((e) => e._id)
+                          .includes(extraThing._id)}
                       />
                       {extraThing.name} +₹{extraThing.price}
                     </label>
                   ))}
                 </div>
               )}
-              <FlyingButton targetTop={"5%"} targetLeft={"80%"} src={image}>
+              <button>
                 <div
                   className="primary sticky bottom-2"
                   onClick={handleAddToCartButtonClick}
                 >
                   Add To Cart ₹{selectedPrice}
                 </div>
-              </FlyingButton>
+              </button>
               <button
                 className="mt-2 border-0"
                 type="button"
