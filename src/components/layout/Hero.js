@@ -1,37 +1,32 @@
 import Image from "next/image";
 import Right from "../icons/Right";
+import Link from "next/link";
 
 export default function Hero() {
   return (
-    <section className="hero md:mt-4">
-      <div className="py-8 md:py-12">
-        <h1 className="text-4xl font-semibold">
-          Everything
-          <br /> is better
-          <br /> with a&nbsp;
-          <span className="text-primary">Pizza</span>
-        </h1>
-        <p className="my-6 text-gray-500 text-sm">
-          Pizza is the missing piece that makes everyday complete, a simple yet
-          delicious ,joy in life
-        </p>
-        <div className="flex gap-4 text-sm">
-          <button className="bg-primary uppercase flex justify-center items-center gap-2 text-white px-4 py-2 rounded-full">
-            Order Now
-            <Right />
-          </button>
-          <button className="flex items-center border-0 gap-2 py-2 text-gray-600 font-semibold">
-            Learn More <Right />
+    <section className="hero">
+      <div className="relative w-screen h-[100vh] flex flex-col items-center justify-center">
+        <Image
+          src="/Wallpaper.jpg"
+          alt="Wallpaper"
+          fill
+          className="object-cover"
+          priority
+        />
+
+        <div className="flex flex-col items-center gap-4">
+          <div className="relative w-[300px] h-[300px] md:w-[400px] md:h-[400px] lg:w-[600px] lg:h-[600px]">
+            <img
+              src="/Offer.gif"
+              alt="Pizza GIF"
+              className="w-full h-full object-contain z-10 rounded-3xl"
+            />
+          </div>
+
+          <button className="w-60 py-2 rounded-full text-2xl font-semibold shadow-lg bg-[#fff3dd] text-primary hover:bg-primary hover:text-[#fff3dd] duration-200 transition z-10">
+            <Link href={'/menu'}>Order Now</Link>
           </button>
         </div>
-      </div>
-      <div className="relative hidden md:block">
-        <Image
-          src={"/pizza.png"}
-              layout={"fill"}
-              objectFit={"contain"}
-          alt={"pizza"}
-        />
       </div>
     </section>
   );

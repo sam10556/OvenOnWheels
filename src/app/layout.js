@@ -4,8 +4,13 @@ import { Roboto } from "next/font/google";
 import Footer from "@/components/layout/Footer";
 import {AppProvider} from "@/components/AppContext";
 import { Toaster } from "react-hot-toast";
+import { IBM_Plex_Mono } from "next/font/google";
+import { Headland_One } from "next/font/google";
+import Chatbot from "@/components/layout/Chatbot";
 
-const roboto = Roboto({ subsets: ["latin"], weight: ["400", "500", "700"] });
+const roboto = Roboto({ subsets: ["latin"],variable:'--font-roboto', weight: ["400", "500", "700"] });
+const ibm = IBM_Plex_Mono({ subsets: ["latin"],variable:'--font-ibm', weight: ["400", "500", "700"] });
+const hlo = Headland_One({ subsets: ["latin"],variable:'--font-hlo', weight: ["400"] });
 
 export const metadata = {
   title: "Create Next App",
@@ -15,11 +20,12 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={roboto.className}>
-        <main className="max-w-4xl mx-auto p-4">
+      <body className={`${ibm.variable} ${roboto.variable} ${hlo.variable} font-sans`}>
+        <main className="w-full mx-auto">
           <AppProvider>
             <Toaster/>
             <Header />
+            <Chatbot/>
             {children}
             <Footer />
           </AppProvider>

@@ -8,7 +8,15 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-          primary:'#f13a01',
+          primary:'#ce3a22',
+      },
+      fontFamily: {
+        ibm: ["var(--font-ibm)"],
+        roboto: ["var(--font-roboto)"],
+        hlo: ["var(--font-hlo)"],
+      },
+      animation: {
+        'slow-spin': 'spin 6s linear infinite', // Slows down the spin
       },
     },
   },

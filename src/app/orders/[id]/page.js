@@ -9,7 +9,7 @@ import AddressInputs from "@/components/layout/AddressInputs";
 export default function OrderPage() {
   const { clearCart } = useContext(CartContext);
   const { id } = useParams();
-  const [order, setOrder] = useState();
+  const [order, setOrder] = useState({});
   const [loadingOrders, setLoadingOrders] = useState(true);
 
   useEffect(() => {

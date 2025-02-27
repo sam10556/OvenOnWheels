@@ -5,6 +5,9 @@
 html {
   scroll-behavior: smooth;
 }
+body{
+  background-color: #fff3dd;
+}
 section.hero {
   @apply block md:grid;
   grid-template-columns: 0.4fr 0.6fr;
@@ -54,6 +57,3 @@ div.tabs > *.active {
   @apply bg-primary text-white;
 }
 
-.flying-button-parent button {
-  @apply bg-primary text-white rounded-full;
-}

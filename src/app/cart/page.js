@@ -71,60 +71,59 @@ export default function CartPage() {
     });
   }
 
-  if (cartProducts?.length === 0) {
-    return (
-      <section className="mt-8 text-center">
-        <SectionHeaders mainHeader="Cart" />
-        <p className="mt-4">Your Shopping Cart Is Empty</p>
-      </section>
-    );
-  }
   return (
-    <section className="mt-8">
-      <div className="text-center">
-        <SectionHeaders mainHeader="Cart" />
+    <section className="mt-8 px-4 md:px-12 lg:px-24">
+      <div className="text-center mb-6">
+        <SectionHeaders mainHeader="Your Cart" />
       </div>
-      <div className="mt-8 grid gap-8 grid-cols-2">
-        <div>
-          {cartProducts?.length === 0 && (
-            <div>No products in your shopping cart</div>
-          )}
-          {cartProducts?.length > 0 &&
-            cartProducts.map((product, index) => (
-              <CartProduct
-                product={product}
-                key={index}
-                onRemove={removeCartProduct}
-              />
-            ))}
-
-          <div className="py-2 justify-end items-center pr-16 flex">
-            <div className="text-gray-500">
-              SubTotal:
-              <br />
-              Delivery Charges:
-              <br />
-              Total:
-            </div>
-            <div className="text-lg font-semibold text-right">
-              ₹{subtotal}
-              <br />
-              ₹100
-              <br />₹{subtotal + 100}
+      {cartProducts?.length === 0 ? (
+        <div className="text-center text-gray-500 text-lg py-12">
+          Your Shopping Cart is Empty
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <div className="bg-white p-6 rounded-lg shadow-md">
+            {cartProducts?.length > 0 &&
+              cartProducts.map((product, index) => (
+                <CartProduct
+                  key={index}
+                  product={product}
+                  index={index} // Pass the index to the CartProduct component
+                  onRemove={removeCartProduct}
+                />
+              ))}
+            <div className="border-t pt-4 mt-4">
+              <div className="flex justify-between text-gray-600 text-lg">
+                <span>Subtotal:</span>
+                <span className="font-semibold">₹{subtotal}</span>
+              </div>
+              <div className="flex justify-between text-gray-600 text-lg">
+                <span>Delivery Charges:</span>
+                <span className="font-semibold">₹100</span>
+              </div>
+              <div className="flex justify-between text-xl font-bold mt-2">
+                <span>Total:</span>
+                <span>₹{subtotal + 100}</span>
+              </div>
             </div>
           </div>
+          <div className="bg-gray-50 p-6 rounded-lg shadow-md">
+            <h2 className="text-2xl font-semibold mb-4">Checkout</h2>
+            <form onSubmit={proceedToCheckout} className="space-y-4">
+              <AddressInputs
+                addressProps={address}
+                setAddressProps={handleAddressChange}
+              />
+              <button
+                type="submit"
+                className="w-full bg-red-500 text-white py-3 rounded-lg font-semibold hover:bg-red-600 transition duration-300"
+              >
+                Pay ₹{subtotal + 100}
+              </button>
+            </form>
+          </div>
         </div>
-        <div className="bg-gray-100 p-4 rounded-lg">
-          <h2>Checkout</h2>
-          <form onSubmit={proceedToCheckout}>
-            <AddressInputs
-              addressProps={address}
-              setAddressProps={handleAddressChange}
-            />
-            <button type="submit">Pay ₹{subtotal + 100}</button>
-          </form>
-        </div>
-      </div>
+      )}
     </section>
   );
 }
