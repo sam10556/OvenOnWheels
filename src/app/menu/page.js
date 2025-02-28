@@ -38,7 +38,7 @@ export default function MenuPage() {
               <SectionHeaders mainHeader={c.name} />
             </div>
             <motion.div
-              className="grid sm:grid-cols-3 mt-6 mb-12 mx-auto max-w-screen-2xl"
+              className="grid gap-2 sm:grid-cols-3 mt-6 mb-12 mx-auto max-w-screen-2xl"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{

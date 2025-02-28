@@ -106,7 +106,7 @@ export default function Chatbot() {
               onClick={() => setIsOpen(false)}
               className="text-white w-10 text-2xl hover:text-gray-400 font-bold border-none"
             >
-              X
+              x
             </button>
           </motion.div>
 

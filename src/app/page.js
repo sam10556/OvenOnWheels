@@ -5,8 +5,6 @@ import Menu from "../components/layout/Menu";
 import Slogan from "../components/layout/Slogan";
 import AboutUs from "../components/layout/AboutUs";
 import SectionHeaders from "../components/layout/SectionHeaders";
-import Image from "next/image";
-import Link from "next/link";
 
 export default function Home() {
   return (

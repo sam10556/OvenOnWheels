@@ -3,9 +3,11 @@ import Image from "next/image";
 import MenuItem from "../menu/MenuItem";
 import SectionHeaders from "./SectionHeaders";
 import { useEffect, useState } from "react";
+import Link from "next/link";
 
 export default function Menu() {
   const [bestSellers, setBestSellers] = useState([]);
+
   useEffect(() => {
     fetch("/api/menu-items").then((res) => {
       res.json().then((menuItems) => {
@@ -13,6 +15,7 @@ export default function Menu() {
       });
     });
   }, []);
+
   return (
     <section className="">
       {/* <div className="absolute left-0 right-0 w-full">
@@ -31,9 +34,9 @@ export default function Menu() {
       </div>
       <div className="grid sm:grid-cols-3 gap-6 md:gap-12 mx-10 md:mx-28 place-items-center max-w-full">
         {[
-          { label: "Pizzas", image: "/Margherita.jpg" },
-          { label: "Pasta", image: "/marguerite.png" },
-          { label: "Dessert", image: "/brownie.png" },
+          { label: "Pizzas", image: "/Margherita.jpg", link: "/menu#pizza" },
+          { label: "Pasta", image: "/marguerite.png", link: "/menu#pasta" },
+          { label: "Dessert", image: "/brownie.png", link: "/menu#dessert" },
         ].map((item, index) => (
           <div key={index} className="relative">
             {/* Image */}
@@ -45,8 +48,8 @@ export default function Menu() {
               alt={item.label}
             />
             {/* Button */}
-            <button className="max-w-28 rounded-full absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 px-4 py-2 bg-[#fff3dd] text-primary hover:bg-primary hover:text-[#fff3dd] font-semibold text-xl border-none duration-200 text-center">
-              {item.label}
+            <button className="max-w-36 rounded-full absolute top-full left-1/2 transform -translate-x-1/2 -translate-y-1/2 px-8 py-4 bg-[#fff3dd] text-primary hover:bg-primary hover:text-[#fff3dd] font-semibold text-2xl border-none duration-200 text-center">
+              <Link href={item.link}>{item.label}</Link>
             </button>
           </div>
         ))}
