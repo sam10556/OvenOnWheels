@@ -18,19 +18,22 @@ function AuthLinks({ status, userName }) {
       </Link>
       <button
         onClick={() => signOut({ callbackUrl: "/" })}
-        className="border-none uppercase text-4xl md:text-base lg:text-xl text-white rounded-full px-6"
+        className="border-none font-semibold text-4xl md:text-base lg:text-xl text-white rounded-full px-6"
       >
         Logout
       </button>
     </>
   ) : (
     <>
-      <Link className="hover:underline uppercase" href="/register">
+      <Link
+        className="hover:underline font-semibold text-4xl md:text-base lg:text-xl"
+        href="/register"
+      >
         Register
       </Link>
       <Link
         href="/login"
-        className="bg-primary uppercase text-white rounded-full px-6 py-2"
+        className="bg-primary font-semibold text-white text-4xl md:text-base lg:text-xl rounded-full px-6 py-2"
       >
         Login
       </Link>
@@ -68,7 +71,7 @@ export default function Header() {
   return (
     <header
       className={`top-0 sticky left-0 w-full z-20 shadow-md transition-all duration-400 ${
-        scrolled ? "bg-red-600/90 backdrop-blur-md" : "bg-red-600"
+        scrolled ? "bg-red-600/90 md:backdrop-blur-md" : "bg-red-600"
       }`}
     >
       <div className="container mx-auto flex justify-between items-center py-6 lg:py-7">
@@ -134,8 +137,8 @@ export default function Header() {
 
       {/* Mobile Navigation */}
       <div
-        className={`z-30 top-0 left-0 w-full h-full bg-red-600 border-r border-gray-900 dark:border-gray-600 overflow-y-hidden ease-in-out duration-500 md:hidden transform ${
-          mobileNavOpen ? "block translate-x-0" : "fixed -translate-x-full"
+        className={`fixed z-30 top-0 left-0 w-full h-full bg-red-600 border-r border-gray-900 dark:border-gray-600 ease-in-out overflow-y-hidden duration-500 md:hidden transform ${
+          mobileNavOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
         <div className="font-bold flex justify-end pt-5 text-4xl">
