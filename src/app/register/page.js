@@ -10,7 +10,6 @@ export default function RegisterPage() {
   const [password, setPassword] = useState("");
   const [creatingUser, setCreatingUser] = useState(false);
   const [userCreated, setUserCreated] = useState(false);
-  const [message, setMessage] = useState("");
   const [error, setError] = useState(false);
 
   async function handleFormSubmit(event) {
@@ -18,75 +17,96 @@ export default function RegisterPage() {
     setCreatingUser(true);
     setError(false);
     setUserCreated(false);
+
     const res = await fetch("/api/register", {
       method: "POST",
       body: JSON.stringify({ email, password }),
       headers: { "Content-Type": "application/json" },
     });
+
     if (res.ok) {
       setUserCreated(true);
     } else {
       setError(true);
     }
+
     setCreatingUser(false);
   }
 
   return (
-    <section className="mt-8">
-      <h1 className="text-center text-primary text-4xl mb-4">Register</h1>
-      {userCreated && (
-        <div className="my-4 text-center">
-          User Created,
-          <br /> Now you can{" "}
-          <Link className="underline" href={"/login"}>
-            Login &raquo;
+    <section className="min-h-screen flex items-center justify-center overflow-hidden px-4">
+      <div className="bg-white/80 backdrop-blur-xl border border-yellow-400/30 rounded-3xl shadow-2xl w-full max-w-md p-8 md:p-10 relative">
+        <h1 className="text-4xl text-center font-extrabold text-red-600 mb-6 drop-shadow-sm">
+          Join The Party! 🍕
+        </h1>
+
+        {userCreated && (
+          <div className="text-green-700 bg-green-100 p-3 rounded text-center mb-4 border border-green-300 font-medium">
+            Registration successful!{" "}
+            <Link href="/login" className="underline text-green-800">
+              Login &raquo;
+            </Link>
+          </div>
+        )}
+
+        {error && (
+          <div className="text-red-700 bg-red-100 p-3 rounded text-center mb-4 border border-red-300 font-medium">
+            Something went wrong. Please try again!
+          </div>
+        )}
+
+        <form className="space-y-5" onSubmit={handleFormSubmit}>
+          <input
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(ev) => setEmail(ev.target.value)}
+            disabled={creatingUser}
+            className="w-full px-4 py-3 bg-white border-2 border-yellow-400 rounded-full placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-red-400 transition"
+            required
+          />
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(ev) => setPassword(ev.target.value)}
+            disabled={creatingUser}
+            className="w-full px-4 py-3 bg-white border-2 border-yellow-400 rounded-full placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-red-400 transition"
+            required
+          />
+          <button
+            type="submit"
+            disabled={creatingUser}
+            className="w-full py-3 bg-red-500 text-white font-bold rounded-full shadow-md hover:bg-red-600 transition"
+          >
+            {creatingUser ? "Creating..." : "Register"}
+          </button>
+        </form>
+
+        <div className="flex items-center gap-4 my-6">
+          <div className="h-px flex-1 bg-red-300" />
+          <span className="text-sm text-gray-600">OR</span>
+          <div className="h-px flex-1 bg-red-300" />
+        </div>
+
+        <button
+          type="button"
+          onClick={() => signIn("google", { callbackUrl: "/" })}
+          className="flex items-center justify-center gap-3 w-full py-3 bg-white border border-gray-300 rounded-full shadow hover:bg-gray-100 transition"
+        >
+          <Image src="/google.png" alt="Google Icon" width={20} height={20} />
+          <span className="font-medium text-gray-800">
+            Register with Google
+          </span>
+        </button>
+
+        <div className="text-center mt-6 text-sm text-gray-600">
+          Already have an account?{" "}
+          <Link href="/login" className="text-red-500 font-semibold underline">
+            Login Here
           </Link>
         </div>
-      )}
-      {error && (
-        <div className="my-4 text-center">
-          An error has occurred.
-          <br />
-          Please Try Again.
-        </div>
-      )}
-      <form className="block max-w-xs mx-auto" onSubmit={handleFormSubmit}>
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(ev) => setEmail(ev.target.value)}
-          disabled={creatingUser}
-          className="block w-full p-2 border border-gray-300 rounded mb-4"
-          required
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(ev) => setPassword(ev.target.value)}
-          disabled={creatingUser}
-          className="block w-full p-2 border border-gray-300 rounded mb-4"
-          required
-        />
-        <button
-          type="submit"
-          disabled={creatingUser}
-          className="block w-full bg-blue-500 text-white py-2 rounded"
-        >
-          Register
-        </button>
-        <div className="my-4 text-center text-gray-500">
-          or login with provider
-        </div>
-        <button type="button" onClick={()=> signIn('google',{callbackUrl:'/'})} className="flex gap-6 justify-center items-center w-full p-2 border border-gray-300 rounded">
-          <Image src="/google.png" alt="Google Icon" width={24} height={24} />
-          Login with Google
-        </button>
-        <div className="text-center my-4 text-gray-500 border-t pt-4">
-          Existing Account?{' '} <Link className="underline" href={'/login'}>Login Here</Link>
-        </div>
-      </form>
+      </div>
     </section>
   );
 }

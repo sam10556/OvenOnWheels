@@ -1,10 +1,9 @@
 import mongoose from "mongoose";
 import { getServerSession } from "next-auth";
 import { Order } from "../../models/Order";
-// import { authOption } from "@/app/api/auth/[...nextauth]/route";
+import { MenuItem } from "../../models/MenuItem";
 import { authOption } from "@/app/utils/auth";
 const stripe = require("stripe")(process.env.STRIPE_SK);
-import { MenuItem } from "../../models/MenuItem";
 
 export async function POST(req) {
   mongoose.connect(process.env.MONGO_URL);
@@ -27,34 +26,48 @@ export async function POST(req) {
       throw new Error(`Product with ID ${cartProduct._id} not found.`);
     }
 
-    let productPrice = productInfo.basePrice;
-    if (productInfo.sizes && cartProduct.size) {
+    let productPrice = productInfo.basePrice || 0;
+
+    if (productInfo.sizes?.length && cartProduct.size?._id) {
       const size = productInfo.sizes.find(
-        (size) => size.id.toString() === cartProduct.size._id.toString()
+        (s) => s.id?.toString() === cartProduct.size._id?.toString()
       );
-      if (size) productPrice += size.price;
+      if (size?.price) productPrice += size.price;
     }
 
-    if (productInfo.extraIngredientPrices && cartProduct.extras?.length > 0) {
-      for (const cartProductExtraThing of cartProduct.extras) {
-        const extraThingInfo = productInfo.extraIngredientPrices.find(
-          (extra) =>
-            extra.id.toString() === cartProductExtraThing._id.toString()
+    if (
+      productInfo.extraIngredientsPrices?.length &&
+      cartProduct.extras?.length
+    ) {
+      for (const extra of cartProduct.extras) {
+        const matchedExtra = productInfo.extraIngredientsPrices.find(
+          (e) => e.id?.toString() === extra._id?.toString()
         );
-        if (extraThingInfo) productPrice += extraThingInfo.price;
+        if (matchedExtra?.price) {
+          productPrice += matchedExtra.price;
+        }
       }
     }
 
     const productName = cartProduct.name;
+    let detailedName = productName;
+
+    if (cartProduct.size?.name) {
+      detailedName += ` (${cartProduct.size.name})`;
+    }
+    if (cartProduct.extras?.length) {
+      const extrasList = cartProduct.extras.map((e) => e.name).join(", ");
+      detailedName += ` + ${extrasList}`;
+    }
 
     stripeLineItems.push({
       quantity: 1,
       price_data: {
         currency: "INR",
         product_data: {
-          name: productName,
+          name: detailedName,
         },
-        unit_amount: productPrice * 100,
+        unit_amount: Math.round(productPrice * 100),
       },
     });
   }
@@ -78,7 +91,7 @@ export async function POST(req) {
         shipping_rate_data: {
           display_name: "Delivery fee",
           type: "fixed_amount",
-          fixed_amount: { amount: 500, currency: "INR" },
+          fixed_amount: { amount: 10000, currency: "INR" },
         },
       },
     ],

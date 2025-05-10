@@ -25,6 +25,18 @@ export default function MenuPage() {
 
   return (
     <section className="mt-8">
+      <div className="flex justify-center items-center gap-4 overflow-x-auto px-4 py-2 mb-6 scrollbar-hide">
+        {categories.map((c) => (
+          <a
+            key={c._id}
+            href={`#${c.name.toLowerCase()}`}
+            className="flex-shrink-0 px-4 py-2 rounded-full border border-red-300 hover:bg-red-800 transition text-base hover:text-white whitespace-nowrap"
+          >
+            {c.name}
+          </a>
+        ))}
+      </div>
+
       {categories?.length > 0 &&
         categories.map((c) => (
           <motion.div

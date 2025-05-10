@@ -6,7 +6,7 @@ html {
   scroll-behavior: smooth;
 }
 body{
-  background-color: #fff3dd;
+  background-color: #ffedca;
 }
 section.hero {
   @apply block md:grid;

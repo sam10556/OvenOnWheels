@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { GiFullPizza } from "react-icons/gi";
 const Loading = () => {
   return (
-    <div className="flex flex-col items-center justify-center h-screen bg-red-100">
+    <div className="flex flex-col items-center justify-center h-screen bg-red-100 overflow-hidden">
       <motion.div
         className="flex items-center justify-center w-28 h-28 bg-white rounded-full shadow-lg"
         animate={{ rotate: [0, 10, -10, 0] }}

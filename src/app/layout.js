@@ -15,7 +15,7 @@ const hlo = Headland_One({ subsets: ["latin"],variable:'--font-hlo', weight: ["4
 export const metadata = {
   title: "Oven On Wheels",
   description: "Pizza Web App created with Next.js",
-  icons: "/public/vin.png",
+  icons: "./vin.png",
 };
 
 export default function RootLayout({ children }) {
