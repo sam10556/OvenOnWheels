@@ -23,7 +23,7 @@ const Hero = () => {
       </div>
 
       {/* Hero Content */}
-      <div className="relative z-10 h-full flex flex-col items-center justify-center px-4 text-center">
+      <div className="relative z-10 h-full flex flex-col items-center justify-center lg:-mt-12 px-4 text-center">
         <div
           className={`transition-all duration-700 ${
             isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
